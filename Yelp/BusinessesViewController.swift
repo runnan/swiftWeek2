@@ -8,12 +8,14 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UISearchResultsUpdating {
+class BusinessesViewController: UIViewController {
 
     var businesses: [Business]?
     
     @IBOutlet weak var restaurantTableView: UITableView!
     var searchController: UISearchController!
+    var isMoreDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,7 @@ class BusinessesViewController: UIViewController, UISearchResultsUpdating {
         })
         
         initSearchBar()
+        setupInfiniteScroll()
 
 /* Example of Yelp search with more search options specified
         Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
@@ -51,7 +54,7 @@ class BusinessesViewController: UIViewController, UISearchResultsUpdating {
         
         // create the search bar programatically since you won't be
         // able to drag one onto the navigation bar
-        var searchBar = UISearchBar()
+        let searchBar = UISearchBar()
         searchBar.sizeToFit()
         
         // the UIViewController comes with a navigationItem property
@@ -69,15 +72,7 @@ class BusinessesViewController: UIViewController, UISearchResultsUpdating {
         searchController.hidesNavigationBarDuringPresentation = false
     }
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text {
-            //filteredData = searchText.isEmpty ? data : data.filter({(dataString: String) -> Bool in
-            //    return dataString.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil
-            //})
-            
-            restaurantTableView.reloadData()
-        }
-    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -97,6 +92,8 @@ class BusinessesViewController: UIViewController, UISearchResultsUpdating {
 }
 
 
+
+
 extension BusinessesViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -108,7 +105,76 @@ extension BusinessesViewController: UITableViewDataSource, UITableViewDelegate{
         cell.business = businesses![indexPath.row]
         return cell
     }
-    
-    
 }
+
+extension BusinessesViewController: UISearchResultsUpdating{
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        if let searchText = searchController.searchBar.text {
+            //filteredData = searchText.isEmpty ? data : data.filter({(dataString: String) -> Bool in
+            //    return dataString.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil
+            //})
+            
+            restaurantTableView.reloadData()
+        }
+    }
+}
+
+extension BusinessesViewController: UIScrollViewDelegate{
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = restaurantTableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - restaurantTableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && restaurantTableView.dragging) {
+                print("Load More")
+                isMoreDataLoading = true
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRectMake(0, restaurantTableView.contentSize.height, restaurantTableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+                
+                loadMoreData()
+            }
+        }
+    }
+    
+    func loadMoreData() {
+        //print("@@@@@@@@\(cellLoad)")
+        //print("@@@@@@@@\(restaurantTableView.indexPathsForVisibleRows![(restaurantTableView.indexPathsForVisibleRows?.endIndex)! - 1].row)")
+        Business.searchWithTerm("Thai",offset: getLastRowVisible(), sort: nil, categories: nil, deals: nil) { (businesses: [Business]!, error: NSError!) -> Void in
+            // Update flag
+            self.isMoreDataLoading = false
+            
+            // Stop the loading indicator
+            self.loadingMoreView!.stopAnimating()
+            
+            self.businesses = businesses
+            self.restaurantTableView.reloadData()
+        }
+    }
+    
+    func getLastRowVisible()-> Int{
+        if restaurantTableView.indexPathsForVisibleRows?.count > 0 {
+            return restaurantTableView.indexPathsForVisibleRows![(restaurantTableView.indexPathsForVisibleRows?.endIndex)! - 1].row
+            
+        }
+        return 0
+    }
+    
+    func setupInfiniteScroll(){
+        // Set up Infinite Scroll loading indicator
+        let frame = CGRectMake(0, restaurantTableView.contentSize.height, restaurantTableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.hidden = true
+        restaurantTableView.addSubview(loadingMoreView!)
+        
+        var insets = restaurantTableView.contentInset;
+        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+        restaurantTableView.contentInset = insets
+    }
+}
+
+
 
