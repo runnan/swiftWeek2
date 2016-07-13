@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		1B798E7D1D351C2100737410 /* BusinessCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B798E7C1D351C2100737410 /* BusinessCell.swift */; };
 		1BD9D7041D36730E00569C0E /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD9D7031D36730E00569C0E /* InfiniteScrollActivityView.swift */; };
+		1BD9D7061D368D7700569C0E /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD9D7051D368D7700569C0E /* SwitchCell.swift */; };
+		1BD9D70A1D36944800569C0E /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD9D7091D36944800569C0E /* FilterViewController.swift */; };
 		222D8A5B19CCF9F900D2DB53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */; };
 		222D8A6019CCF9F900D2DB53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A5E19CCF9F900D2DB53 /* Main.storyboard */; };
 		222D8A6219CCF9F900D2DB53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A6119CCF9F900D2DB53 /* Images.xcassets */; };
@@ -33,6 +35,8 @@
 /* Begin PBXFileReference section */
 		1B798E7C1D351C2100737410 /* BusinessCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessCell.swift; sourceTree = "<group>"; };
 		1BD9D7031D36730E00569C0E /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
+		1BD9D7051D368D7700569C0E /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
+		1BD9D7091D36944800569C0E /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		222D8A5519CCF9F900D2DB53 /* Yelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		222D8A5919CCF9F900D2DB53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 				222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */,
 				222D8A5E19CCF9F900D2DB53 /* Main.storyboard */,
 				1B798E7C1D351C2100737410 /* BusinessCell.swift */,
+				1BD9D7051D368D7700569C0E /* SwitchCell.swift */,
 				1BD9D7031D36730E00569C0E /* InfiniteScrollActivityView.swift */,
 				222D8A6119CCF9F900D2DB53 /* Images.xcassets */,
 				222D8A6319CCF9F900D2DB53 /* LaunchScreen.xib */,
@@ -151,6 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */,
+				1BD9D7091D36944800569C0E /* FilterViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -327,7 +333,9 @@
 			files = (
 				1BD9D7041D36730E00569C0E /* InfiniteScrollActivityView.swift in Sources */,
 				1B798E7D1D351C2100737410 /* BusinessCell.swift in Sources */,
+				1BD9D70A1D36944800569C0E /* FilterViewController.swift in Sources */,
 				22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */,
+				1BD9D7061D368D7700569C0E /* SwitchCell.swift in Sources */,
 				22AAAA991AEA0A9700A544AF /* Business.swift in Sources */,
 				222D8A7D19CCFAE000D2DB53 /* YelpClient.swift in Sources */,
 				222D8A5B19CCF9F900D2DB53 /* AppDelegate.swift in Sources */,
