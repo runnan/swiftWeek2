@@ -22,7 +22,7 @@ class BusinessCell: UITableViewCell {
     
     var business: Business!{
         didSet{
-            print(business)
+            //print(business)
             restaurantNameLabel.text = business.name
             restaurantImage.setImageWithURL(business.imageURL!)
             ratingImage.setImageWithURL(business.ratingImageURL!)

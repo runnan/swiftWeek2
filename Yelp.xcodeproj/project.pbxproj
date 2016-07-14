@@ -73,6 +73,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1BF0318A1D37EFA700123314 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1BD9D7031D36730E00569C0E /* InfiniteScrollActivityView.swift */,
+				1BD9D7051D368D7700569C0E /* SwitchCell.swift */,
+				1B798E7C1D351C2100737410 /* BusinessCell.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		222D8A4C19CCF9F900D2DB53 = {
 			isa = PBXGroup;
 			children = (
@@ -96,14 +106,12 @@
 		222D8A5719CCF9F900D2DB53 /* Yelp */ = {
 			isa = PBXGroup;
 			children = (
+				1BF0318A1D37EFA700123314 /* View */,
 				22AAAA9A1AEA0AA100A544AF /* Models */,
 				222D8A7A19CCFAAA00D2DB53 /* API */,
 				22AAAA9D1AEA1EC600A544AF /* View Controllers */,
 				222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */,
 				222D8A5E19CCF9F900D2DB53 /* Main.storyboard */,
-				1B798E7C1D351C2100737410 /* BusinessCell.swift */,
-				1BD9D7051D368D7700569C0E /* SwitchCell.swift */,
-				1BD9D7031D36730E00569C0E /* InfiniteScrollActivityView.swift */,
 				222D8A6119CCF9F900D2DB53 /* Images.xcassets */,
 				222D8A6319CCF9F900D2DB53 /* LaunchScreen.xib */,
 				222D8A5819CCF9F900D2DB53 /* Supporting Files */,

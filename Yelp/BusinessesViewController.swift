@@ -25,14 +25,10 @@ class BusinessesViewController: UIViewController {
         restaurantTableView.estimatedRowHeight = 100
         restaurantTableView.rowHeight = UITableViewAutomaticDimension
         
-
-        Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
-            self.restaurantTableView.reloadData()
-        })
+        loadData(0)
         
         initSearchBar()
-        setupInfiniteScroll()
+        //setupInfiniteScroll()
 
 /* Example of Yelp search with more search options specified
         Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
@@ -79,15 +75,21 @@ class BusinessesViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        let navigationVC = segue.destinationViewController as! UINavigationController
+        
+        /////////////////////@@@@@@Get VC from Navigation VC@@@@@////////////////////////
+        let filterVC = navigationVC.topViewController as! FilterViewController
+        /////////////////////@@@@@@@@@@@////////////////////////
+        filterVC.delegate = self
     }
-    */
+    
 
 }
 
@@ -105,7 +107,7 @@ extension BusinessesViewController: UITableViewDataSource, UITableViewDelegate{
         cell.business = businesses![indexPath.row]
         if indexPath.row == (businesses?.count)! - 1 {
             print(indexPath.row)
-            //loadMoreData(indexPath.row)
+            //loadData(indexPath.row)
         }
         return cell
     }
@@ -146,15 +148,15 @@ extension BusinessesViewController: UIScrollViewDelegate{
          */
     }
     
-    func loadMoreData(offset:NSNumber) {
-        //print("@@@@@@@@\(cellLoad)")
+    func loadData(offset:NSNumber) {
+        print("load data")
         //print("@@@@@@@@\(restaurantTableView.indexPathsForVisibleRows![(restaurantTableView.indexPathsForVisibleRows?.endIndex)! - 1].row)")
         Business.searchWithTerm("Thai",offset: offset, sort: nil, categories: nil, deals: nil) { (businesses: [Business]!, error: NSError!) -> Void in
             // Update flag
             self.isMoreDataLoading = false
             
             // Stop the loading indicator
-            self.loadingMoreView!.stopAnimating()
+            //self.loadingMoreView!.stopAnimating()
             
             self.businesses = businesses
             self.restaurantTableView.reloadData()
@@ -171,6 +173,16 @@ extension BusinessesViewController: UIScrollViewDelegate{
         var insets = restaurantTableView.contentInset;
         insets.bottom += InfiniteScrollActivityView.defaultHeight;
         restaurantTableView.contentInset = insets
+    }
+}
+
+extension BusinessesViewController: FilterViewControllerDelegate{
+    func filterViewControllerDelegate(filterViewController: FilterViewController, didUpdateFilters filters: [String : AnyObject]) {
+        var categories = filters["categories"] as? [String]
+        Business.searchWithTerm("Thai",offset: 0, sort: nil, categories: categories, deals: nil) { (businesses: [Business]!, error: NSError!) -> Void in
+            self.businesses = businesses
+            self.restaurantTableView.reloadData()
+        }
     }
 }
 
