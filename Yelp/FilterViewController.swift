@@ -258,24 +258,58 @@ func yelpCategories() -> [[String:String]] {
 
 extension FilterViewController: UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate{
     
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return categories.count
+        switch section {
+            case 0: return 1
+            case 1: return categories.count + 1
+            default: return 0
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
-        cell.catalogyLabel.text = categories[indexPath.row]["name"]
-        cell.delegate = self
+        switch indexPath.section {
+        case 0:
+            let cell = tableView.dequeueReusableCellWithIdentifier("dealCell", forIndexPath: indexPath) as! UITableViewCell
+            //cell.textLabel?.text = "Offering a Deal"
+            return cell
+        case 1:
+            let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
+            cell.catalogyLabel.text = categories[(indexPath.row)]["name"]
+            print(cell.catalogyLabel.text)
+            cell.delegate = self
+            
+            ////////////////////////////////////////////////////////////
+            
+            //Need write in here because when it render the cell for table -> each cell have different value, otherwise it will reuse same value (dequeue func)
+            cell.categogyStatusSwitch.on = switchStates[indexPath.row] ?? false
+            
+            /////////////////////////////////////////////////////////////
+            return cell
+        default:
+            return UITableViewCell()
+            
+        }
         
-        ////////////////////////////////////////////////////////////
-        
-        //Need write in here because when it render the cell for table -> each cell have different value, otherwise it will reuse same value (dequeue func)
-        cell.categogyStatusSwitch.on = switchStates[indexPath.row] ?? false
-        
-        /////////////////////////////////////////////////////////////
-        return cell
     }
     
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UILabel()
+        switch section {
+            case 0:
+                return nil
+            case 1:
+                header.text = "Categories"
+            default:
+                return header
+        }
+        return header
+    }
+
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 2
+    }
+
     func switchCell(swichCell: SwitchCell, didChangeValue: Bool) {
         let indexPath = switchTableView.indexPathForCell(swichCell)!
         switchStates[indexPath.row] = didChangeValue

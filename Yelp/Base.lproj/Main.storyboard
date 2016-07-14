@@ -61,8 +61,8 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A7R-fp-m3M">
-                                                    <rect key="frame" x="387" y="8" width="21" height="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="km" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A7R-fp-m3M">
+                                                    <rect key="frame" x="388" y="8" width="21" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -183,12 +183,29 @@
                                             <outlet property="categogyStatusSwitch" destination="TnI-eA-aAC" id="ivS-qc-9Jt"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="9" id="7Vv-iM-5nv">
-                                        <rect key="frame" x="0.0" y="130" width="414" height="9"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="dealCell" rowHeight="52" id="7Vv-iM-5nv">
+                                        <rect key="frame" x="0.0" y="130" width="414" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7Vv-iM-5nv" id="Knq-fw-oCQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="8.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="51.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Offering a Deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wU4-ra-pB9">
+                                                    <rect key="frame" x="5" y="15.5" width="115" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eNq-3v-JgG">
+                                                    <rect key="frame" x="357" y="10.5" width="51" height="31"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="wU4-ra-pB9" firstAttribute="centerY" secondItem="Knq-fw-oCQ" secondAttribute="centerY" id="DJf-Cg-07B"/>
+                                                <constraint firstAttribute="trailing" secondItem="eNq-3v-JgG" secondAttribute="trailing" constant="8" id="Wep-Hz-YLq"/>
+                                                <constraint firstItem="wU4-ra-pB9" firstAttribute="leading" secondItem="Knq-fw-oCQ" secondAttribute="leading" constant="5" id="cx5-tN-gVH"/>
+                                                <constraint firstItem="eNq-3v-JgG" firstAttribute="centerY" secondItem="Knq-fw-oCQ" secondAttribute="centerY" id="dKA-7t-eP6"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
