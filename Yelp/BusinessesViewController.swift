@@ -103,6 +103,10 @@ extension BusinessesViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessCell
         cell.business = businesses![indexPath.row]
+        if indexPath.row == (businesses?.count)! - 1 {
+            print(indexPath.row)
+            //loadMoreData(indexPath.row)
+        }
         return cell
     }
 }
@@ -121,6 +125,7 @@ extension BusinessesViewController: UISearchResultsUpdating{
 
 extension BusinessesViewController: UIScrollViewDelegate{
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        /*
         if (!isMoreDataLoading) {
             // Calculate the position of one screen length before the bottom of the results
             let scrollViewContentHeight = restaurantTableView.contentSize.height
@@ -138,12 +143,13 @@ extension BusinessesViewController: UIScrollViewDelegate{
                 loadMoreData()
             }
         }
+         */
     }
     
-    func loadMoreData() {
+    func loadMoreData(offset:NSNumber) {
         //print("@@@@@@@@\(cellLoad)")
         //print("@@@@@@@@\(restaurantTableView.indexPathsForVisibleRows![(restaurantTableView.indexPathsForVisibleRows?.endIndex)! - 1].row)")
-        Business.searchWithTerm("Thai",offset: getLastRowVisible(), sort: nil, categories: nil, deals: nil) { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithTerm("Thai",offset: offset, sort: nil, categories: nil, deals: nil) { (businesses: [Business]!, error: NSError!) -> Void in
             // Update flag
             self.isMoreDataLoading = false
             
@@ -153,14 +159,6 @@ extension BusinessesViewController: UIScrollViewDelegate{
             self.businesses = businesses
             self.restaurantTableView.reloadData()
         }
-    }
-    
-    func getLastRowVisible()-> Int{
-        if restaurantTableView.indexPathsForVisibleRows?.count > 0 {
-            return restaurantTableView.indexPathsForVisibleRows![(restaurantTableView.indexPathsForVisibleRows?.endIndex)! - 1].row
-            
-        }
-        return 0
     }
     
     func setupInfiniteScroll(){

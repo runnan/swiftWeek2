@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Business: NSObject {
+class Business:CustomStringConvertible {
     let name: String?
     let address: String?
     let imageURL: NSURL?
@@ -94,5 +94,17 @@ class Business: NSObject {
     
     class func searchWithTerm(term: String, offset: NSNumber, sort: YelpSortMode?, categories: [String]?, deals: Bool?, completion: ([Business]!, NSError!) -> Void) -> Void {
         YelpClient.sharedInstance.searchWithTerm(term, offset:offset, sort: sort, categories: categories, deals: deals, completion: completion)
+    }
+    
+    // Creates a text representation of a GitHub repo
+    var description: String {
+        return "[Name: \(self.name)]" +
+            "\n\t[address: \(self.address)]" +
+            "\n\t[image: \(self.imageURL)]" +
+            "\n\t[cat: \(self.categories)]" +
+            "\n\t[count: \(self.reviewCount)]" +
+            "\n\t[distance: \(self.distance)]" +
+            "\n\t[ratingImage: \(self.ratingImageURL)]"
+        
     }
 }
