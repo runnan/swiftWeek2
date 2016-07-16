@@ -178,14 +178,25 @@ extension BusinessesViewController: UIScrollViewDelegate{
 
 extension BusinessesViewController: FilterViewControllerDelegate{
     func filterViewControllerDelegate(filterViewController: FilterViewController, didUpdateFilters filters: [String : AnyObject]) {
-        var categories = filters["categories"] as? [String]
+        let categories = filters["categories"] as? [String]
         var radius_filter = filters["distance"] as? Double
         if(radius_filter != nil){
             radius_filter = radius_filter!*1609.34
         }
-        var deals = filters["deal"] as! Bool
         
-        Business.searchWithTerm("Thai",offset: 0, sort: nil, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
+        let sort = filters["sortBy"] as? Int
+        var sortBy = YelpSortMode.BestMatched
+        if(sort != nil){
+            if(sort == 1){
+                sortBy = YelpSortMode.Distance
+            }else{
+                sortBy = YelpSortMode.HighestRated
+            }
+        }
+        
+        let deals = filters["deal"] as! Bool
+        
+        Business.searchWithTerm("Thai",offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.restaurantTableView.reloadData()
         }

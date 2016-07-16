@@ -20,11 +20,17 @@ class FilterViewController: UIViewController {
     
     var categories = yelpCategories()
     var switchStates = [Int:Bool]()
-    var selectedDistance = [String:String]()
+    
     var selectedDeal = false
     
     var distances = createDistances()
+    var selectedDistance = [String:String]()
     var switchOn = false
+    
+    var sorts = createSortBy()
+    var selectedSortBy = [String:String]()
+    var switchSortOn = false
+    
     
     weak var delegate:FilterViewControllerDelegate?
     
@@ -48,6 +54,9 @@ class FilterViewController: UIViewController {
         }
         if(selectedDistance.count > 0){
             filters["distance"] = Double(selectedDistance["code"]!)
+        }
+        if(selectedSortBy.count > 0){
+            filters["sortBy"] = Int(selectedSortBy["code"]!)
         }
         filters["deal"] = selectedDeal
         
@@ -271,19 +280,34 @@ func createDistances() -> [[String:String]] {
             ["name" : "10 miles", "code": "10"]]
 }
 
+func createSortBy() -> [[String:String]] {
+    return [["name" : "Best matched", "code": "0"],
+            ["name" : "Distance", "code": "1"],
+            ["name" : "Highest Rated", "code": "2"]]
+}
+
 
 
 extension FilterViewController: UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate, DistanceCellDelegate{
     func distanceCellDidSwitchChanged(switchCell: DistanceCell) {
-        switchOn = switchCell.isClick;
-        switchTableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
+        let indexPath = switchTableView.indexPathForCell(switchCell)!
+        if(indexPath.section == 1){
+            switchOn = switchCell.isClick
+            switchTableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
+        }else if(indexPath.section == 2){
+            switchSortOn = switchCell.isClick
+            switchTableView.reloadSections(NSIndexSet(index: 2), withRowAnimation: .Automatic)
+        }
+        
+        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
             case 0: return 1
             case 1: return distances.count + 1
-            case 2: return categories.count
+            case 3: return categories.count
+            case 2: return sorts.count + 1
             default: return 0
         }
     }
@@ -325,8 +349,31 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
                 return cell
 
             }
-
         case 2:
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCellWithIdentifier("DistanceCell", forIndexPath: indexPath) as! DistanceCell
+                cell.delegate = self
+                cell.distanceValueLabel.text = sorts[0]["name"]
+                cell.isClick = switchSortOn
+                if(selectedSortBy.count > 0){
+                    cell.distanceValueLabel.text = selectedSortBy["name"]
+                    if(selectedSortBy["code"] != "0"){
+                        cell.toggleImage.image = UIImage.fontAwesomeIconWithName(.Check, textColor: UIColor.blackColor(), size: CGSizeMake(30, 30))
+                    }else{
+                        selectedSortBy = [String:String]()
+                        cell.toggleImage.image = UIImage.fontAwesomeIconWithName(.CaretDown, textColor: UIColor.blackColor(), size: CGSizeMake(30, 30))
+                    }
+
+                }
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier("SelectCell", forIndexPath: indexPath) as! SelectCell
+                cell.mileLabel.text = sorts[(indexPath.row-1)]["name"]
+                return cell
+                
+            }
+
+        case 3:
             let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
             cell.catalogyLabel.text = categories[(indexPath.row)]["name"]
             
@@ -361,8 +408,10 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
         switch section {
             case 1:
                 header.text = "Distance"
-            case 2:
+            case 3:
                 header.text = "Categories"
+            case 2:
+                header.text = "Sort by"
             default:
                 return header
         }
@@ -370,15 +419,13 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if switchOn {
-            return 44
-        } else {
-            switch indexPath.section {
-            case 0: return 44
-            case 1: return indexPath.row == 0 ? 44 : 0
-            case 2: return 44
-            default: return 0
-            }
+        
+        switch indexPath.section {
+        case 0: return 44
+        case 1: return indexPath.row == 0 || switchOn ? 44 : 0
+        case 2: return indexPath.row == 0 || switchSortOn ? 44 : 0
+        case 3: return 44
+        default: return 0
         }
     }
     
@@ -390,11 +437,17 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
                 switchOn = !switchOn
                 tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
             }
+        }else if (indexPath.section == 2){
+            if indexPath.row != 0 {//click at children
+                selectedSortBy = sorts[indexPath.row - 1]
+                switchSortOn = !switchSortOn
+                tableView.reloadSections(NSIndexSet(index: 2), withRowAnimation: .None)
+            }
         }
     }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3
+        return 4
     }
 
     func switchCell(swichCell: SwitchCell, didChangeValue: Bool) {

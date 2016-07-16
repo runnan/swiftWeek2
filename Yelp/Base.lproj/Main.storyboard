@@ -183,33 +183,8 @@
                                             <outlet property="categogyStatusSwitch" destination="TnI-eA-aAC" id="ivS-qc-9Jt"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="dealCell" rowHeight="52" id="7Vv-iM-5nv">
-                                        <rect key="frame" x="0.0" y="130" width="414" height="52"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7Vv-iM-5nv" id="Knq-fw-oCQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="51.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Offering a Deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wU4-ra-pB9">
-                                                    <rect key="frame" x="5" y="15.5" width="115" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eNq-3v-JgG">
-                                                    <rect key="frame" x="357" y="10.5" width="51" height="31"/>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="wU4-ra-pB9" firstAttribute="centerY" secondItem="Knq-fw-oCQ" secondAttribute="centerY" id="DJf-Cg-07B"/>
-                                                <constraint firstAttribute="trailing" secondItem="eNq-3v-JgG" secondAttribute="trailing" constant="8" id="Wep-Hz-YLq"/>
-                                                <constraint firstItem="wU4-ra-pB9" firstAttribute="leading" secondItem="Knq-fw-oCQ" secondAttribute="leading" constant="5" id="cx5-tN-gVH"/>
-                                                <constraint firstItem="eNq-3v-JgG" firstAttribute="centerY" secondItem="Knq-fw-oCQ" secondAttribute="centerY" id="dKA-7t-eP6"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DistanceCell" id="TVA-j0-gVE" customClass="DistanceCell" customModule="Yelp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="182" width="414" height="38"/>
+                                        <rect key="frame" x="0.0" y="130" width="414" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TVA-j0-gVE" id="n1x-OC-9Yu">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="37.5"/>
@@ -244,7 +219,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectCell" id="G2H-EP-uGG" customClass="SelectCell" customModule="Yelp" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="220" width="414" height="38"/>
+                                        <rect key="frame" x="0.0" y="168" width="414" height="38"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="G2H-EP-uGG" id="nT0-yN-HYS">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="37.5"/>
