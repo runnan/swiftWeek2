@@ -10,7 +10,7 @@ import UIKit
 
 class BusinessesViewController: UIViewController {
 
-    var businesses: [Business]?
+    var businesses = [Business]()
     
     @IBOutlet weak var restaurantTableView: UITableView!
     var searchController: UISearchController!
@@ -24,11 +24,11 @@ class BusinessesViewController: UIViewController {
         restaurantTableView.dataSource = self
         restaurantTableView.estimatedRowHeight = 100
         restaurantTableView.rowHeight = UITableViewAutomaticDimension
-        
-        loadData(0)
+
+        loadData("Thai",offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter)
         
         initSearchBar()
-        //setupInfiniteScroll()
+        setupInfiniteScroll()
 
 /* Example of Yelp search with more search options specified
         Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
@@ -99,13 +99,13 @@ class BusinessesViewController: UIViewController {
 extension BusinessesViewController: UITableViewDataSource, UITableViewDelegate{
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return businesses?.count ?? 0
+        return businesses.count ?? 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessCell
-        cell.business = businesses![indexPath.row]
-        if indexPath.row == (businesses?.count)! - 1 {
+        cell.business = businesses[indexPath.row]
+        if indexPath.row == (businesses.count) - 1{
             print(indexPath.row)
             //loadData(indexPath.row)
         }
@@ -127,7 +127,7 @@ extension BusinessesViewController: UISearchResultsUpdating{
 
 extension BusinessesViewController: UIScrollViewDelegate{
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        /*
+        
         if (!isMoreDataLoading) {
             // Calculate the position of one screen length before the bottom of the results
             let scrollViewContentHeight = restaurantTableView.contentSize.height
@@ -142,23 +142,25 @@ extension BusinessesViewController: UIScrollViewDelegate{
                 loadingMoreView?.frame = frame
                 loadingMoreView!.startAnimating()
                 
-                loadMoreData()
+                loadData("Thai",offset: businesses.count, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter)
             }
+            
         }
-         */
+ 
+        
     }
     
-    func loadData(offset:NSNumber) {
-        print("load data")
-        //print("@@@@@@@@\(restaurantTableView.indexPathsForVisibleRows![(restaurantTableView.indexPathsForVisibleRows?.endIndex)! - 1].row)")
-        Business.searchWithTerm("Thai",offset: offset, sort: nil, categories: nil, deals: nil,radius_filter:nil) { (businesses: [Business]!, error: NSError!) -> Void in
+    func loadData(term: String, offset: NSNumber, sort: YelpSortMode?, categories: [String]?, deals: Bool?,radius_filter: Double?) {
+        Business.searchWithTerm(term,offset: offset, sort: sort, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
             // Update flag
             self.isMoreDataLoading = false
             
             // Stop the loading indicator
-            //self.loadingMoreView!.stopAnimating()
-            
-            self.businesses = businesses
+            self.loadingMoreView!.stopAnimating()
+
+            for item in businesses {
+                self.businesses.append(item)
+            }
             self.restaurantTableView.reloadData()
         }
     }
@@ -176,16 +178,22 @@ extension BusinessesViewController: UIScrollViewDelegate{
     }
 }
 
+var categories : [String]!
+var radius_filter:Double!
+var sort :Int!
+var sortBy : YelpSortMode!
+var deals : Bool!
+
 extension BusinessesViewController: FilterViewControllerDelegate{
     func filterViewControllerDelegate(filterViewController: FilterViewController, didUpdateFilters filters: [String : AnyObject]) {
-        let categories = filters["categories"] as? [String]
-        var radius_filter = filters["distance"] as? Double
+        categories = filters["categories"] as? [String]
+        radius_filter = filters["distance"] as? Double
         if(radius_filter != nil){
             radius_filter = radius_filter!*1609.34
         }
         
-        let sort = filters["sortBy"] as? Int
-        var sortBy = YelpSortMode.BestMatched
+        sort = filters["sortBy"] as? Int
+        sortBy = YelpSortMode.BestMatched
         if(sort != nil){
             if(sort == 1){
                 sortBy = YelpSortMode.Distance
@@ -194,7 +202,7 @@ extension BusinessesViewController: FilterViewControllerDelegate{
             }
         }
         
-        let deals = filters["deal"] as! Bool
+        deals = filters["deal"] as! Bool
         
         Business.searchWithTerm("Thai",offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses

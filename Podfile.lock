@@ -24,17 +24,20 @@ PODS:
     - AFNetworking/NSURLConnection (~> 2.5.0)
     - AFNetworking/NSURLSession (~> 2.5.0)
   - FontAwesome.swift (0.7.3)
+  - UIScrollView-InfiniteScroll (0.9.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5.4)
   - BDBOAuth1Manager (~> 1.5)
   - FontAwesome.swift
+  - UIScrollView-InfiniteScroll
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   BDBOAuth1Manager: 2e28773b58f880fb36b5cd3efcf0b1fefbc78a99
   FontAwesome.swift: f694fe0f667d6d3390b5919cdb0556a27b75d427
+  UIScrollView-InfiniteScroll: 14e204c50ca4040467e1cbfa141dad7a18919b56
 
-PODFILE CHECKSUM: 05a97b8e9e184ff9f7190d74387a2d9a27d3ad7d
+PODFILE CHECKSUM: 9f329dac39206df61e7e48686abea2fc0ff51c8e
 
 COCOAPODS: 1.0.1
