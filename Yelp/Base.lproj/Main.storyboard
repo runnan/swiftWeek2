@@ -221,21 +221,26 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F0d-V0-OZE">
-                                                    <rect key="frame" x="360" y="4" width="46" height="30"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <connections>
-                                                        <action selector="onTouch:" destination="TVA-j0-gVE" eventType="touchDown" id="nSy-fE-Gkz"/>
-                                                    </connections>
-                                                </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zQt-aQ-Hbh">
+                                                    <rect key="frame" x="384" y="7" width="25" height="25"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="1Nx-Mo-rqR"/>
+                                                        <constraint firstAttribute="height" constant="25" id="LJH-5d-8ff"/>
+                                                    </constraints>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="F0d-V0-OZE" secondAttribute="trailing" constant="8" id="PGb-RW-IxN"/>
-                                                <constraint firstItem="F0d-V0-OZE" firstAttribute="baseline" secondItem="gcg-J7-gcx" secondAttribute="baseline" id="cX6-JJ-zas"/>
+                                                <constraint firstAttribute="trailing" secondItem="zQt-aQ-Hbh" secondAttribute="trailing" constant="5" id="Cei-qg-1UD"/>
+                                                <constraint firstItem="gcg-J7-gcx" firstAttribute="centerY" secondItem="n1x-OC-9Yu" secondAttribute="centerY" id="cF8-LZ-pBq"/>
+                                                <constraint firstItem="gcg-J7-gcx" firstAttribute="leading" secondItem="n1x-OC-9Yu" secondAttribute="leading" constant="5" id="esf-iA-vbX"/>
                                                 <constraint firstItem="gcg-J7-gcx" firstAttribute="centerY" secondItem="n1x-OC-9Yu" secondAttribute="centerY" id="izg-zv-YNh"/>
+                                                <constraint firstItem="zQt-aQ-Hbh" firstAttribute="centerY" secondItem="n1x-OC-9Yu" secondAttribute="centerY" id="oOj-a8-BFA"/>
                                                 <constraint firstItem="gcg-J7-gcx" firstAttribute="leading" secondItem="n1x-OC-9Yu" secondAttribute="leading" constant="5" id="vlw-W5-a7A"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="toggleImage" destination="zQt-aQ-Hbh" id="t1l-Ok-xsx"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SelectCell" id="G2H-EP-uGG" customClass="SelectCell" customModule="Yelp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="220" width="414" height="38"/>

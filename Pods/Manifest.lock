@@ -1,35 +1,40 @@
 PODS:
-  - AFNetworking (2.6.3):
-    - AFNetworking/NSURLConnection (= 2.6.3)
-    - AFNetworking/NSURLSession (= 2.6.3)
-    - AFNetworking/Reachability (= 2.6.3)
-    - AFNetworking/Security (= 2.6.3)
-    - AFNetworking/Serialization (= 2.6.3)
-    - AFNetworking/UIKit (= 2.6.3)
-  - AFNetworking/NSURLConnection (2.6.3):
+  - AFNetworking (2.5.4):
+    - AFNetworking/NSURLConnection (= 2.5.4)
+    - AFNetworking/NSURLSession (= 2.5.4)
+    - AFNetworking/Reachability (= 2.5.4)
+    - AFNetworking/Security (= 2.5.4)
+    - AFNetworking/Serialization (= 2.5.4)
+    - AFNetworking/UIKit (= 2.5.4)
+  - AFNetworking/NSURLConnection (2.5.4):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.3):
+  - AFNetworking/NSURLSession (2.5.4):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.3)
-  - AFNetworking/Security (2.6.3)
-  - AFNetworking/Serialization (2.6.3)
-  - AFNetworking/UIKit (2.6.3):
+  - AFNetworking/Reachability (2.5.4)
+  - AFNetworking/Security (2.5.4)
+  - AFNetworking/Serialization (2.5.4)
+  - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - BDBOAuth1Manager (1.6.0):
-    - AFNetworking/NSURLConnection (~> 2.6.0)
-    - AFNetworking/NSURLSession (~> 2.6.0)
+  - BDBOAuth1Manager (1.5.0):
+    - AFNetworking/NSURLConnection (~> 2.5.0)
+    - AFNetworking/NSURLSession (~> 2.5.0)
+  - FontAwesome.swift (0.7.3)
 
 DEPENDENCIES:
-  - AFNetworking (~> 2.5)
-  - BDBOAuth1Manager
+  - AFNetworking (~> 2.5.4)
+  - BDBOAuth1Manager (~> 1.5)
+  - FontAwesome.swift
 
 SPEC CHECKSUMS:
-  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  BDBOAuth1Manager: cd5a5872f355ca38180d52ca2dd844f0b0c84797
+  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  BDBOAuth1Manager: 2e28773b58f880fb36b5cd3efcf0b1fefbc78a99
+  FontAwesome.swift: f694fe0f667d6d3390b5919cdb0556a27b75d427
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 05a97b8e9e184ff9f7190d74387a2d9a27d3ad7d
+
+COCOAPODS: 1.0.1

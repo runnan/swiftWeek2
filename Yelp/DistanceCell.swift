@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesome_swift
 @objc protocol DistanceCellDelegate {
     optional func distanceCellDidSwitchChanged(switchCell: DistanceCell)
 }
@@ -16,9 +17,22 @@ class DistanceCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        toggleImage.image = UIImage.fontAwesomeIconWithName(.CaretDown, textColor: UIColor.blackColor(), size: CGSizeMake(30, 30))
+        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
+        toggleImage.userInteractionEnabled = true
+        toggleImage.addGestureRecognizer(tapGestureRecognizer)
     }
+    
+    @IBOutlet weak var toggleImage: UIImageView!
+    
+    func imageTapped(img: AnyObject)
+    {
+        isClick = !isClick
+        //print("fromDCell\(isClick)")
+        delegate?.distanceCellDidSwitchChanged?(self)
+    }
+    
     @IBAction func onTouch(sender: UIButton) {
-        
         isClick = !isClick
         //print("fromDCell\(isClick)")
         delegate?.distanceCellDidSwitchChanged?(self)
