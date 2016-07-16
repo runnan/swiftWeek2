@@ -21,6 +21,7 @@ class FilterViewController: UIViewController {
     var categories = yelpCategories()
     var switchStates = [Int:Bool]()
     var selectedDistance = [String:String]()
+    var selectedDeal = false
     
     var distances = createDistances()
     var switchOn = false
@@ -45,9 +46,10 @@ class FilterViewController: UIViewController {
         if(selectedCategories.count > 0){
             filters["categories"] = selectedCategories
         }
-        if(selectedDistance.count > 0 && selectedDistance["code"] != "0"){
+        if(selectedDistance.count > 0){
             filters["distance"] = Double(selectedDistance["code"]!)
         }
+        filters["deal"] = selectedDeal
         
         delegate?.filterViewControllerDelegate?(self, didUpdateFilters: filters)
         print("OnSearch from FilterVC")
@@ -281,7 +283,7 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
             case 0: return 1
-            case 1: return distances.count+1
+            case 1: return distances.count + 1
             case 2: return categories.count
             default: return 0
         }
@@ -290,8 +292,17 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         switch indexPath.section {
         case 0:
-            let cell = tableView.dequeueReusableCellWithIdentifier("dealCell", forIndexPath: indexPath) as! UITableViewCell
-            //cell.textLabel?.text = "Offering a Deal"
+            let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
+            cell.catalogyLabel.text = "Offering a Deal"
+            cell.delegate = self
+            
+            ////////////////////////////////////////////////////////////
+            
+            //Need write in here because when it render the cell for table -> each cell have different value, otherwise it will reuse same value (dequeue func)
+            cell.categogyStatusSwitch.on = selectedDeal
+            
+            /////////////////////////////////////////////////////////////
+
             return cell
         case 1:
             if indexPath.row == 0 {
@@ -303,6 +314,7 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
                     if(selectedDistance["code"] != "0"){
                         cell.toggleImage.image = UIImage.fontAwesomeIconWithName(.Check, textColor: UIColor.blackColor(), size: CGSizeMake(30, 30))
                     }else{
+                        selectedDistance = [String:String]()
                         cell.toggleImage.image = UIImage.fontAwesomeIconWithName(.CaretDown, textColor: UIColor.blackColor(), size: CGSizeMake(30, 30))
                     }
                     
@@ -380,7 +392,11 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
 
     func switchCell(swichCell: SwitchCell, didChangeValue: Bool) {
         let indexPath = switchTableView.indexPathForCell(swichCell)!
-        switchStates[indexPath.row] = didChangeValue
+        if(indexPath.section == 0){
+            selectedDeal = didChangeValue
+        }else{
+            switchStates[indexPath.row] = didChangeValue
+        }
         print("VC got switch from Cell\(indexPath.row) with value \(switchStates[indexPath.row])")
     }
 }

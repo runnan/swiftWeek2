@@ -183,8 +183,9 @@ extension BusinessesViewController: FilterViewControllerDelegate{
         if(radius_filter != nil){
             radius_filter = radius_filter!*1609.34
         }
+        var deals = filters["deal"] as! Bool
         
-        Business.searchWithTerm("Thai",offset: 0, sort: nil, categories: categories, deals: nil,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithTerm("Thai",offset: 0, sort: nil, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.restaurantTableView.reloadData()
         }
