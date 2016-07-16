@@ -107,7 +107,7 @@ extension BusinessesViewController: UITableViewDataSource, UITableViewDelegate{
         cell.business = businesses![indexPath.row]
         if indexPath.row == (businesses?.count)! - 1 {
             print(indexPath.row)
-            //loadData(indexPath.row)
+            loadData(indexPath.row)
         }
         return cell
     }

@@ -20,6 +20,10 @@ class FilterViewController: UIViewController {
     
     var categories = yelpCategories()
     var switchStates = [Int:Bool]()
+    var distance = String()
+    
+    var distances = createDistances()
+    var switchOn = false
     
     weak var delegate:FilterViewControllerDelegate?
     
@@ -54,10 +58,6 @@ class FilterViewController: UIViewController {
         
         switchTableView.estimatedRowHeight = 50
         switchTableView.rowHeight = UITableViewAutomaticDimension
-        
-        //for category in categories {
-        //    <#code#>
-        //}
         
         switchTableView.reloadData()
 
@@ -255,14 +255,27 @@ func yelpCategories() -> [[String:String]] {
             ["name" : "Yugoslav", "code": "yugoslav"]]
 }
 
+func createDistances() -> [[String:String]] {
+    return [["name" : "1 mile", "code": "1"],
+            ["name" : "2 miles", "code": "2"],
+            ["name" : "5 miles", "code": "5"],
+            ["name" : "10 miles", "code": "10"]]
+}
 
-extension FilterViewController: UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate{
-    
+
+
+extension FilterViewController: UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate, DistanceCellDelegate{
+    func distanceCellDidSwitchChanged(switchCell: DistanceCell) {
+        print(switchCell.isClick)
+        switchOn = switchCell.isClick;
+        switchTableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
+    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
             case 0: return 1
-            case 1: return categories.count + 1
+            case 1: return 5
+            case 2: return categories.count
             default: return 0
         }
     }
@@ -274,6 +287,22 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
             //cell.textLabel?.text = "Offering a Deal"
             return cell
         case 1:
+            
+            
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCellWithIdentifier("DistanceCell", forIndexPath: indexPath) as! DistanceCell
+                cell.delegate = self
+                cell.isClick = switchOn
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier("SelectCell", forIndexPath: indexPath) as! SelectCell
+                //print((indexPath.row-1))
+                cell.mileLabel.text = distances[(indexPath.row-1)]["name"]
+                return cell
+
+            }
+
+        case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
             cell.catalogyLabel.text = categories[(indexPath.row)]["name"]
             print(cell.catalogyLabel.text)
@@ -299,15 +328,42 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
             case 0:
                 return nil
             case 1:
+                header.text = "Distance"
+            case 2:
                 header.text = "Categories"
             default:
                 return header
         }
         return header
     }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if switchOn {
+            return 44
+        } else {
+            switch indexPath.section {
+            case 0: return 44
+            case 1: return indexPath.row == 0 ? 44 : 0
+            case 2: return 44
+            default: return 0
+            }
+        }
+    }
+    
+    //Trigger when click table cell
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 1 {
+            if indexPath.row != 0 {//click at children
+                print("Click row at:\(indexPath.row)")
+                //selectedLanguage = languages[indexPath.row - 1]
+                distance = distances[indexPath.row - 1]["code"]!
+                //tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
+            }
+        }
+    }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
 
     func switchCell(swichCell: SwitchCell, didChangeValue: Bool) {
@@ -316,4 +372,3 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
         print("VC got switch from Cell\(indexPath.row) with value \(switchStates[indexPath.row])")
     }
 }
-
