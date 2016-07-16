@@ -107,7 +107,7 @@ extension BusinessesViewController: UITableViewDataSource, UITableViewDelegate{
         cell.business = businesses![indexPath.row]
         if indexPath.row == (businesses?.count)! - 1 {
             print(indexPath.row)
-            loadData(indexPath.row)
+            //loadData(indexPath.row)
         }
         return cell
     }
@@ -151,7 +151,7 @@ extension BusinessesViewController: UIScrollViewDelegate{
     func loadData(offset:NSNumber) {
         print("load data")
         //print("@@@@@@@@\(restaurantTableView.indexPathsForVisibleRows![(restaurantTableView.indexPathsForVisibleRows?.endIndex)! - 1].row)")
-        Business.searchWithTerm("Thai",offset: offset, sort: nil, categories: nil, deals: nil) { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithTerm("Thai",offset: offset, sort: nil, categories: nil, deals: nil,radius_filter:nil) { (businesses: [Business]!, error: NSError!) -> Void in
             // Update flag
             self.isMoreDataLoading = false
             
@@ -179,7 +179,12 @@ extension BusinessesViewController: UIScrollViewDelegate{
 extension BusinessesViewController: FilterViewControllerDelegate{
     func filterViewControllerDelegate(filterViewController: FilterViewController, didUpdateFilters filters: [String : AnyObject]) {
         var categories = filters["categories"] as? [String]
-        Business.searchWithTerm("Thai",offset: 0, sort: nil, categories: categories, deals: nil) { (businesses: [Business]!, error: NSError!) -> Void in
+        var radius_filter = filters["distance"] as? Double
+        if(radius_filter != nil){
+            radius_filter = radius_filter!*1609.34
+        }
+        
+        Business.searchWithTerm("Thai",offset: 0, sort: nil, categories: categories, deals: nil,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.restaurantTableView.reloadData()
         }

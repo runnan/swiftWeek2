@@ -85,7 +85,7 @@ class YelpClient: BDBOAuth1RequestOperationManager {
         })!
     }
     
-    func searchWithTerm(term: String, offset: NSNumber, sort: YelpSortMode?, categories: [String]?, deals: Bool?, completion: ([Business]!, NSError!) -> Void) -> AFHTTPRequestOperation {
+    func searchWithTerm(term: String, offset: NSNumber, sort: YelpSortMode?, categories: [String]?, deals: Bool?,radius_filter: Double?, completion: ([Business]!, NSError!) -> Void) -> AFHTTPRequestOperation {
         // For additional parameters, see http://www.yelp.com/developers/documentation/v2/search_api
         
         // Default the location to San Francisco
@@ -101,6 +101,10 @@ class YelpClient: BDBOAuth1RequestOperationManager {
         
         if deals != nil {
             parameters["deals_filter"] = deals!
+        }
+        
+        if radius_filter != nil {
+            parameters["radius_filter"] = radius_filter!
         }
         
         parameters["offset"] = offset

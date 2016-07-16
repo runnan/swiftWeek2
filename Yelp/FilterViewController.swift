@@ -20,7 +20,7 @@ class FilterViewController: UIViewController {
     
     var categories = yelpCategories()
     var switchStates = [Int:Bool]()
-    var distance = String()
+    var selectedDistance = [String:String]()
     
     var distances = createDistances()
     var switchOn = false
@@ -44,6 +44,9 @@ class FilterViewController: UIViewController {
         }
         if(selectedCategories.count > 0){
             filters["categories"] = selectedCategories
+        }
+        if(selectedDistance.count > 0 && selectedDistance["code"] != "0"){
+            filters["distance"] = Double(selectedDistance["code"]!)
         }
         
         delegate?.filterViewControllerDelegate?(self, didUpdateFilters: filters)
@@ -256,7 +259,11 @@ func yelpCategories() -> [[String:String]] {
 }
 
 func createDistances() -> [[String:String]] {
-    return [["name" : "1 mile", "code": "1"],
+    return [["name" : "Auto", "code": "0"],
+            ["name" : "0.1 miles", "code": "0.1"],
+            ["name" : "0.2 miles", "code": "0.2"],
+            ["name" : "0.5 miles", "code": "0.5"],
+            ["name" : "1 mile", "code": "1"],
             ["name" : "2 miles", "code": "2"],
             ["name" : "5 miles", "code": "5"],
             ["name" : "10 miles", "code": "10"]]
@@ -266,15 +273,15 @@ func createDistances() -> [[String:String]] {
 
 extension FilterViewController: UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate, DistanceCellDelegate{
     func distanceCellDidSwitchChanged(switchCell: DistanceCell) {
-        print(switchCell.isClick)
         switchOn = switchCell.isClick;
+        
         switchTableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
             case 0: return 1
-            case 1: return 5
+            case 1: return distances.count+1
             case 2: return categories.count
             default: return 0
         }
@@ -287,16 +294,22 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
             //cell.textLabel?.text = "Offering a Deal"
             return cell
         case 1:
-            
-            
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCellWithIdentifier("DistanceCell", forIndexPath: indexPath) as! DistanceCell
                 cell.delegate = self
                 cell.isClick = switchOn
+                if(selectedDistance.count > 0){
+                    cell.distanceValueLabel.text = selectedDistance["name"]
+                    if(selectedDistance["code"] != "0"){
+                        cell.toggleImage.image = UIImage.fontAwesomeIconWithName(.Check, textColor: UIColor.blackColor(), size: CGSizeMake(30, 30))
+                    }else{
+                        cell.toggleImage.image = UIImage.fontAwesomeIconWithName(.CaretDown, textColor: UIColor.blackColor(), size: CGSizeMake(30, 30))
+                    }
+                    
+                }
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("SelectCell", forIndexPath: indexPath) as! SelectCell
-                //print((indexPath.row-1))
                 cell.mileLabel.text = distances[(indexPath.row-1)]["name"]
                 return cell
 
@@ -305,7 +318,7 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
         case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
             cell.catalogyLabel.text = categories[(indexPath.row)]["name"]
-            print(cell.catalogyLabel.text)
+            
             cell.delegate = self
             
             ////////////////////////////////////////////////////////////
@@ -354,10 +367,9 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 {
             if indexPath.row != 0 {//click at children
-                print("Click row at:\(indexPath.row)")
-                //selectedLanguage = languages[indexPath.row - 1]
-                distance = distances[indexPath.row - 1]["code"]!
-                //tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
+                selectedDistance = distances[indexPath.row - 1]
+                switchOn = !switchOn
+                tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .None)
             }
         }
     }

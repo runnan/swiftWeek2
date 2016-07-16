@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FontAwesome_swift
 
 class BusinessCell: UITableViewCell {
 
@@ -24,7 +25,12 @@ class BusinessCell: UITableViewCell {
         didSet{
             //print(business)
             restaurantNameLabel.text = business.name
-            restaurantImage.setImageWithURL(business.imageURL!)
+            if(business.imageURL != nil){
+                restaurantImage.setImageWithURL(business.imageURL!)
+            }else{
+                restaurantImage.image = UIImage.fontAwesomeIconWithName(.Cutlery, textColor: UIColor.blackColor(), size: CGSizeMake(90, 90))
+            }       
+            
             ratingImage.setImageWithURL(business.ratingImageURL!)
             categoryLabel.text = business.categories
             reviewLabel.text = (business.reviewCount?.stringValue)! + " reviews"

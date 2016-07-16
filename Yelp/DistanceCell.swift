@@ -15,6 +15,8 @@ class DistanceCell: UITableViewCell {
     weak var delegate: DistanceCellDelegate?
     var isClick = false
     
+    @IBOutlet weak var distanceValueLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         toggleImage.image = UIImage.fontAwesomeIconWithName(.CaretDown, textColor: UIColor.blackColor(), size: CGSizeMake(30, 30))
@@ -28,13 +30,6 @@ class DistanceCell: UITableViewCell {
     func imageTapped(img: AnyObject)
     {
         isClick = !isClick
-        //print("fromDCell\(isClick)")
-        delegate?.distanceCellDidSwitchChanged?(self)
-    }
-    
-    @IBAction func onTouch(sender: UIButton) {
-        isClick = !isClick
-        //print("fromDCell\(isClick)")
         delegate?.distanceCellDidSwitchChanged?(self)
     }
 }
