@@ -276,7 +276,6 @@ func createDistances() -> [[String:String]] {
 extension FilterViewController: UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate, DistanceCellDelegate{
     func distanceCellDidSwitchChanged(switchCell: DistanceCell) {
         switchOn = switchCell.isClick;
-        
         switchTableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
     }
     
@@ -347,11 +346,19 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
         
     }
     
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if(section == 0){
+            return 0;
+        }
+        return 40;
+    }
+    
+    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let header = UILabel()
+        header.backgroundColor = UIColor.grayColor()
+
         switch section {
-            case 0:
-                return nil
             case 1:
                 header.text = "Distance"
             case 2:
