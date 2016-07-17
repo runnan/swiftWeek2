@@ -18,6 +18,13 @@ class BusinessesViewController: UIViewController {
     var loadingMoreView:InfiniteScrollActivityView?
     var searchBar: UISearchBar!
     
+    var categories : [String]!
+    var radius_filter:Double!
+    var sort :Int!
+    var sortBy : YelpSortMode!
+    var deals : Bool!
+    var searchText : String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,8 +32,10 @@ class BusinessesViewController: UIViewController {
         restaurantTableView.dataSource = self
         restaurantTableView.estimatedRowHeight = 100
         restaurantTableView.rowHeight = UITableViewAutomaticDimension
+        
+        searchText = ""
 
-        Business.searchWithTerm("",offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithTerm(searchText,offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.restaurantTableView.reloadData()
         }
@@ -105,7 +114,8 @@ extension BusinessesViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        Business.searchWithTerm("",offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
+        searchText = ""
+        Business.searchWithTerm(searchText,offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.restaurantTableView.reloadData()
         }
@@ -114,7 +124,8 @@ extension BusinessesViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        Business.searchWithTerm(searchBar.text!,offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
+        searchText = searchBar.text
+        Business.searchWithTerm(searchText,offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.restaurantTableView.reloadData()
         }
@@ -123,7 +134,8 @@ extension BusinessesViewController: UISearchBarDelegate {
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String){
         if(searchText.isEmpty){
             searchBar.resignFirstResponder()
-            Business.searchWithTerm(searchBar.text!,offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
+            self.searchText = searchText
+            Business.searchWithTerm(self.searchText,offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
                 self.businesses = businesses
                 self.restaurantTableView.reloadData()
             }
@@ -186,11 +198,7 @@ extension BusinessesViewController: UIScrollViewDelegate{
     }
 }
 
-var categories : [String]!
-var radius_filter:Double!
-var sort :Int!
-var sortBy : YelpSortMode!
-var deals : Bool!
+
 
 extension BusinessesViewController: FilterViewControllerDelegate{
     func filterViewControllerDelegate(filterViewController: FilterViewController, didUpdateFilters filters: [String : AnyObject]) {
@@ -212,7 +220,7 @@ extension BusinessesViewController: FilterViewControllerDelegate{
         
         deals = filters["deal"] as! Bool
         
-        Business.searchWithTerm("Thai",offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithTerm(searchText,offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             self.restaurantTableView.reloadData()
         }
