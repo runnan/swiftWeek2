@@ -31,6 +31,8 @@ class FilterViewController: UIViewController {
     var selectedSortBy = [String:String]()
     var switchSortOn = false
     
+    var isShowMore = false
+    
     
     weak var delegate:FilterViewControllerDelegate?
     
@@ -306,7 +308,7 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
         switch section {
             case 0: return 1
             case 1: return distances.count + 1
-            case 3: return categories.count
+            case 3: return isShowMore ? categories.count : 4
             case 2: return sorts.count + 1
             default: return 0
         }
@@ -374,18 +376,24 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
             }
 
         case 3:
-            let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
-            cell.catalogyLabel.text = categories[(indexPath.row)]["name"]
+            if indexPath.row == switchTableView.numberOfRowsInSection(3) - 1 && !isShowMore{
+                let cell = tableView.dequeueReusableCellWithIdentifier("SeeAllCell", forIndexPath: indexPath) as! SeeAllCell
+                return cell
+            }else{
+                let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
+                cell.catalogyLabel.text = categories[(indexPath.row)]["name"]
+                
+                cell.delegate = self
+                
+                ////////////////////////////////////////////////////////////
+                
+                //Need write in here because when it render the cell for table -> each cell have different value, otherwise it will reuse same value (dequeue func)
+                cell.categogyStatusSwitch.on = switchStates[indexPath.row] ?? false
+                
+                /////////////////////////////////////////////////////////////
+                return cell
+            }
             
-            cell.delegate = self
-            
-            ////////////////////////////////////////////////////////////
-            
-            //Need write in here because when it render the cell for table -> each cell have different value, otherwise it will reuse same value (dequeue func)
-            cell.categogyStatusSwitch.on = switchStates[indexPath.row] ?? false
-            
-            /////////////////////////////////////////////////////////////
-            return cell
         default:
             return UITableViewCell()
             
@@ -442,6 +450,11 @@ extension FilterViewController: UITableViewDataSource, UITableViewDelegate, Swit
                 selectedSortBy = sorts[indexPath.row - 1]
                 switchSortOn = !switchSortOn
                 tableView.reloadSections(NSIndexSet(index: 2), withRowAnimation: .None)
+            }
+        }else if (indexPath.section == 3){
+            if indexPath.row == switchTableView.numberOfRowsInSection(3) - 1 {
+                isShowMore = true
+                tableView.reloadSections(NSIndexSet(index: 3), withRowAnimation: .None)
             }
         }
     }

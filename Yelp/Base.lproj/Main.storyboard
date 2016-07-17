@@ -255,6 +255,26 @@
                                             <outlet property="mileLabel" destination="17z-JW-YMh" id="gYQ-Bb-JTh"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SeeAllCell" id="oRv-3t-cTE" customClass="SeeAllCell" customModule="Yelp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="206" width="414" height="38"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oRv-3t-cTE" id="vXC-xu-MH1">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="37.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="See All" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bE5-3T-VnB">
+                                                    <rect key="frame" x="180.5" y="8" width="53" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="bE5-3T-VnB" firstAttribute="centerX" secondItem="vXC-xu-MH1" secondAttribute="centerX" id="i2G-D9-AbF"/>
+                                                <constraint firstItem="bE5-3T-VnB" firstAttribute="centerY" secondItem="vXC-xu-MH1" secondAttribute="centerY" id="yzU-zT-jMC"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
