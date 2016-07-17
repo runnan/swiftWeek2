@@ -70,10 +70,20 @@ class BusinessesViewController: UIViewController {
         // Pass the selected object to the new view controller.
         let navigationVC = segue.destinationViewController as! UINavigationController
         
-        /////////////////////@@@@@@Get VC from Navigation VC@@@@@////////////////////////
-        let filterVC = navigationVC.topViewController as! FilterViewController
-        /////////////////////@@@@@@@@@@@////////////////////////
-        filterVC.delegate = self
+        print(sender)
+        if let s = sender as? UIBarButtonItem {
+            /////////////////////@@@@@@Get VC from Navigation VC@@@@@////////////////////////
+            let filterVC = navigationVC.topViewController as! FilterViewController
+            /////////////////////@@@@@@@@@@@////////////////////////
+            filterVC.delegate = self
+        }else {
+            let detailVC = navigationVC.topViewController as! DetailsController
+            let ip = restaurantTableView.indexPathForSelectedRow
+            detailVC.coordinate = businesses[(ip!.row)].coordinate
+            detailVC.restaurantName = businesses[(ip!.row)].name
+        }
+        
+       
     }
     
 
@@ -91,10 +101,6 @@ extension BusinessesViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("businessCell", forIndexPath: indexPath) as! BusinessCell
         cell.business = businesses[indexPath.row]
-        if indexPath.row == (businesses.count) - 1{
-            print(indexPath.row)
-            //loadData(indexPath.row)
-        }
         return cell
     }
 }

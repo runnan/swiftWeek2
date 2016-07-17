@@ -14,6 +14,7 @@
 		1BD9D7061D368D7700569C0E /* SwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD9D7051D368D7700569C0E /* SwitchCell.swift */; };
 		1BD9D70A1D36944800569C0E /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD9D7091D36944800569C0E /* FilterViewController.swift */; };
 		1BFFC00D1D3B53DD007445EC /* SeeAllCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFC00C1D3B53DD007445EC /* SeeAllCell.swift */; };
+		1BFFC00F1D3B5DBE007445EC /* DetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BFFC00E1D3B5DBE007445EC /* DetailsController.swift */; };
 		222D8A5B19CCF9F900D2DB53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */; };
 		222D8A6019CCF9F900D2DB53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A5E19CCF9F900D2DB53 /* Main.storyboard */; };
 		222D8A6219CCF9F900D2DB53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A6119CCF9F900D2DB53 /* Images.xcassets */; };
@@ -44,6 +45,7 @@
 		1BD9D7051D368D7700569C0E /* SwitchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchCell.swift; sourceTree = "<group>"; };
 		1BD9D7091D36944800569C0E /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		1BFFC00C1D3B53DD007445EC /* SeeAllCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeeAllCell.swift; sourceTree = "<group>"; };
+		1BFFC00E1D3B5DBE007445EC /* DetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsController.swift; sourceTree = "<group>"; };
 		222D8A5519CCF9F900D2DB53 /* Yelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		222D8A5919CCF9F900D2DB53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			children = (
 				22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */,
 				1BD9D7091D36944800569C0E /* FilterViewController.swift */,
+				1BFFC00E1D3B5DBE007445EC /* DetailsController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				1BFFC00D1D3B53DD007445EC /* SeeAllCell.swift in Sources */,
 				1B2DB03F1D39F5ED0054501C /* SelectCell.swift in Sources */,
 				1B798E7D1D351C2100737410 /* BusinessCell.swift in Sources */,
+				1BFFC00F1D3B5DBE007445EC /* DetailsController.swift in Sources */,
 				1BD9D70A1D36944800569C0E /* FilterViewController.swift in Sources */,
 				1B2DB03D1D39F19F0054501C /* DistanceCell.swift in Sources */,
 				22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */,

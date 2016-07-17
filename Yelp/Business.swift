@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class Business:CustomStringConvertible {
     let name: String?
@@ -16,6 +17,8 @@ class Business:CustomStringConvertible {
     let distance: String?
     let ratingImageURL: NSURL?
     let reviewCount: NSNumber?
+    var coordinate: CLLocation?
+    //let centerLocation = CLLocation(latitude: 37.7833, longitude: -122.4167)
     
     init(dictionary: NSDictionary) {
         name = dictionary["name"] as? String
@@ -29,6 +32,9 @@ class Business:CustomStringConvertible {
         
         let location = dictionary["location"] as? NSDictionary
         var address = ""
+        
+        self.coordinate = nil
+        
         if location != nil {
             let addressArray = location!["address"] as? NSArray
             if addressArray != nil && addressArray!.count > 0 {
@@ -41,6 +47,12 @@ class Business:CustomStringConvertible {
                     address += ", "
                 }
                 address += neighborhoods![0] as! String
+            }
+            
+            let coordinate = location!["coordinate"] as? [String : Double]
+            if coordinate != nil && coordinate!.count > 0 {
+                //print(coordinate)
+                self.coordinate = CLLocation(latitude: coordinate!["latitude"]!, longitude: coordinate!["longitude"]!)
             }
         }
         self.address = address
@@ -73,6 +85,7 @@ class Business:CustomStringConvertible {
         }
         
         reviewCount = dictionary["review_count"] as? NSNumber
+        
     }
     
     class func businesses(array array: [NSDictionary]) -> [Business] {
@@ -104,6 +117,7 @@ class Business:CustomStringConvertible {
             "\n\t[cat: \(self.categories)]" +
             "\n\t[count: \(self.reviewCount)]" +
             "\n\t[distance: \(self.distance)]" +
+            "\n\t[coordinate: \(self.coordinate)]" +
             "\n\t[ratingImage: \(self.ratingImageURL)]"
         
     }

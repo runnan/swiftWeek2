@@ -108,6 +108,7 @@
                                             <outlet property="restaurantImage" destination="i2f-NS-9lq" id="3bB-wg-5vE"/>
                                             <outlet property="restaurantNameLabel" destination="pfl-F4-nSH" id="wMM-JM-RoJ"/>
                                             <outlet property="reviewLabel" destination="F5L-Dl-AbX" id="YID-6n-d7Q"/>
+                                            <segue destination="Af8-Qj-CyI" kind="modal" id="pXR-py-tun"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -136,6 +137,45 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fgb-4b-F1b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1317" y="346"/>
+        </scene>
+        <!--Details Controller-->
+        <scene sceneID="zbX-Rp-50E">
+            <objects>
+                <viewController id="AkK-9R-orw" customClass="DetailsController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5U1-QN-oJV"/>
+                        <viewControllerLayoutGuide type="bottom" id="Pr8-VG-pHA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6xv-rG-RR8">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="u2L-38-4qB">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="u2L-38-4qB" secondAttribute="trailing" id="RJG-gB-LDu"/>
+                            <constraint firstItem="Pr8-VG-pHA" firstAttribute="top" secondItem="u2L-38-4qB" secondAttribute="bottom" id="UMU-75-22I"/>
+                            <constraint firstItem="u2L-38-4qB" firstAttribute="top" secondItem="5U1-QN-oJV" secondAttribute="bottom" id="ahg-hv-E30"/>
+                            <constraint firstItem="u2L-38-4qB" firstAttribute="leading" secondItem="6xv-rG-RR8" secondAttribute="leading" id="gKo-aO-jtv"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="pT7-hx-0e1">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="jjp-bQ-M3Z">
+                            <connections>
+                                <action selector="onCancel:" destination="AkK-9R-orw" id="7NH-kT-APR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="map" destination="u2L-38-4qB" id="qQO-EM-0ec"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lIK-sU-OQi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2164" y="1261"/>
         </scene>
         <!--Filters-->
         <scene sceneID="QPi-2k-AvW">
@@ -197,7 +237,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Auto" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gcg-J7-gcx">
                                                     <rect key="frame" x="5" y="8" width="36" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zQt-aQ-Hbh">
@@ -232,7 +272,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Miles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="17z-JW-YMh">
                                                     <rect key="frame" x="5" y="8" width="40" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aaF-d9-lCQ">
@@ -265,7 +305,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="See All" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bE5-3T-VnB">
                                                     <rect key="frame" x="180.5" y="8" width="53" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -341,6 +381,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5Qq-hQ-ato" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1923" y="338"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="IXP-Ji-Lju">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Af8-Qj-CyI" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Ekk-3o-lI9">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="AkK-9R-orw" kind="relationship" relationship="rootViewController" id="7hS-zg-kHW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="19L-xw-zse" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1538" y="1261"/>
         </scene>
     </scenes>
 </document>
