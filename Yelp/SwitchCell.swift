@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SevenSwitch
+import FontAwesome_swift
 
 @objc protocol SwitchCellDelegate {
     optional func switchCell(swichCell: SwitchCell, didChangeValue: Bool)
@@ -15,16 +17,25 @@ import UIKit
 class SwitchCell: UITableViewCell {
     
     @IBOutlet weak var catalogyLabel: UILabel!
-    @IBOutlet weak var categogyStatusSwitch: UISwitch!
+    var categogyStatusSwitch: SevenSwitch!
     
     weak var delegate: SwitchCellDelegate?
     
+    @IBOutlet weak var switchView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        customSwitch()
         
         //add event by hand
-        
         categogyStatusSwitch.addTarget(self, action: "onSwitchCategory", forControlEvents: UIControlEvents.ValueChanged)
+    }
+    
+    func customSwitch(){
+        self.categogyStatusSwitch = SevenSwitch()
+        categogyStatusSwitch.thumbImage = UIImage.fontAwesomeIconWithName(.ShoppingBasket, textColor: UIColor.blackColor(), size: CGSizeMake(25, 25))
+        categogyStatusSwitch.isRounded = false
+        self.switchView.addSubview(categogyStatusSwitch)
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
