@@ -18,9 +18,12 @@ class Business:CustomStringConvertible {
     let ratingImageURL: NSURL?
     let reviewCount: NSNumber?
     var coordinate: CLLocation?
+    let phone: String?
     //let centerLocation = CLLocation(latitude: 37.7833, longitude: -122.4167)
     
     init(dictionary: NSDictionary) {
+        phone = dictionary["display_phone"] as? String
+        
         name = dictionary["name"] as? String
         
         let imageURLString = dictionary["image_url"] as? String

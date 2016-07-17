@@ -70,7 +70,6 @@ class BusinessesViewController: UIViewController {
         // Pass the selected object to the new view controller.
         let navigationVC = segue.destinationViewController as! UINavigationController
         
-        print(sender)
         if let s = sender as? UIBarButtonItem {
             /////////////////////@@@@@@Get VC from Navigation VC@@@@@////////////////////////
             let filterVC = navigationVC.topViewController as! FilterViewController
@@ -79,8 +78,7 @@ class BusinessesViewController: UIViewController {
         }else {
             let detailVC = navigationVC.topViewController as! DetailsController
             let ip = restaurantTableView.indexPathForSelectedRow
-            detailVC.coordinate = businesses[(ip!.row)].coordinate
-            detailVC.restaurantName = businesses[(ip!.row)].name
+            detailVC.business = businesses[(ip!.row)]
         }
         
        
