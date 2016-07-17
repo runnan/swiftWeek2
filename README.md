@@ -37,7 +37,7 @@ The following **additional** features are implemented:
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
 1. The best way to do with infinite scroll
-2. Reposive layout
+2. How to add the constraits in code
 
 ## Video Walkthrough
 
