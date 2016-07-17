@@ -16,6 +16,7 @@ class BusinessesViewController: UIViewController {
     var searchController: UISearchController!
     var isMoreDataLoading = false
     var loadingMoreView:InfiniteScrollActivityView?
+    var searchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,47 +26,23 @@ class BusinessesViewController: UIViewController {
         restaurantTableView.estimatedRowHeight = 100
         restaurantTableView.rowHeight = UITableViewAutomaticDimension
 
-        loadData("Thai",offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter)
-        
+        Business.searchWithTerm("",offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
+            self.businesses = businesses
+            self.restaurantTableView.reloadData()
+        }
+        restaurantTableView.reloadData()
         initSearchBar()
         setupInfiniteScroll()
-
-/* Example of Yelp search with more search options specified
-        Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
-            
-            for business in businesses {
-                print(business.name!)
-                print(business.address!)
-            }
-        }
-*/
     }
     
     func initSearchBar() {
-        // Initializing with searchResultsController set to nil means that
-        // searchController will use this view controller to display the search results
-        searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
+        // Initialize the UISearchBar
+        searchBar = UISearchBar()
+        searchBar.delegate = self
         
-        // create the search bar programatically since you won't be
-        // able to drag one onto the navigation bar
-        let searchBar = UISearchBar()
+        // Add SearchBar to the NavigationBar
         searchBar.sizeToFit()
-        
-        // the UIViewController comes with a navigationItem property
-        // this will automatically be initialized for you if when the
-        // view controller is added to a navigation controller's stack
-        // you just need to set the titleView to be the search bar
         navigationItem.titleView = searchBar
-        searchDisplayController?.displaysSearchBarInNavigationBar = true
-        searchController.searchBar.sizeToFit()
-        navigationItem.titleView = searchController.searchBar
-        
-        // By default the navigation bar hides when presenting the
-        // search interface.  Obviously we don't want this to happen if
-        // our search bar is inside the navigation bar.
-        searchController.hidesNavigationBarDuringPresentation = false
     }
     
 
@@ -113,17 +90,48 @@ extension BusinessesViewController: UITableViewDataSource, UITableViewDelegate{
     }
 }
 
-extension BusinessesViewController: UISearchResultsUpdating{
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        if let searchText = searchController.searchBar.text {
-            //filteredData = searchText.isEmpty ? data : data.filter({(dataString: String) -> Bool in
-            //    return dataString.rangeOfString(searchText, options: .CaseInsensitiveSearch) != nil
-            //})
-            
+
+extension BusinessesViewController: UISearchBarDelegate {
+    
+    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+        searchBar.setShowsCancelButton(true, animated: true)
+        return true
+    }
+    
+    func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
+        searchBar.setShowsCancelButton(false, animated: true)
+        return true
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        Business.searchWithTerm("",offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
+            self.businesses = businesses
+            self.restaurantTableView.reloadData()
+        }
+        restaurantTableView.reloadData()
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        Business.searchWithTerm(searchBar.text!,offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
+            self.businesses = businesses
+            self.restaurantTableView.reloadData()
+        }
+        restaurantTableView.reloadData()
+    }
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String){
+        if(searchText.isEmpty){
+            searchBar.resignFirstResponder()
+            Business.searchWithTerm(searchBar.text!,offset: 0, sort: sortBy, categories: categories, deals: deals,radius_filter:radius_filter) { (businesses: [Business]!, error: NSError!) -> Void in
+                self.businesses = businesses
+                self.restaurantTableView.reloadData()
+            }
             restaurantTableView.reloadData()
         }
     }
 }
+
 
 extension BusinessesViewController: UIScrollViewDelegate{
     func scrollViewDidScroll(scrollView: UIScrollView) {
